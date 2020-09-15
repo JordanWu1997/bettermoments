@@ -52,6 +52,12 @@ def _threshold_mask(data, mask, rms=None, threshold=0.0):
     Returns:
         mask (ndarray): Boolean mask of which pixels to include.
     """
+    #--------------------------------
+    # Added by Jordan 2020.07.09
+    if threshold is None:
+        threshold = 0.0
+    #--------------------------------
+
     if rms is None or threshold <= 0.0:
         return mask.astype('bool')
     rms = np.atleast_1d(rms)

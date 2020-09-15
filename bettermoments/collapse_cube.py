@@ -101,10 +101,22 @@ def collapse_quadratic(velax, data, linewidth=None, rms=None, N=5, axis=0):
     """
     from bettermoments.methods import quadratic
     rms, chan = _verify_data(data, velax, rms=rms, N=N, axis=axis)
-    if linewidth > 0.0:
-        linewidth = abs(linewidth / chan / np.sqrt(2.))
-    else:
-        linewidth = None
+
+    #=================================================================
+    # Original One
+    #if linewidth > 0.0:
+    #    linewidth = abs(linewidth / chan / np.sqrt(2.))
+    #else:
+    #    linewidth = None
+    #=================================================================
+    # Revised One (Jordan Wu)
+    if linewidth is not None:
+        if linewidth > 0.0:
+            linewidth = abs(linewidth / chan / np.sqrt(2.))
+        else:
+            linewith = None
+    #=================================================================
+
     return quadratic(data, x0=velax[0], dx=chan, linewidth=linewidth,
                      uncertainty=np.ones(data.shape)*rms, axis=axis)
 
@@ -374,10 +386,22 @@ def collapse_width(velax, data, linewidth=0.0, rms=None, N=5, threshold=None,
     I0, dI0 = integrated_intensity(data=data, dx=abs(chan),
                                    threshold=threshold, rms=rms,
                                    mask_path=mask_path, axis=axis)
-    if linewidth > 0.0:
-        linewidth = abs(linewidth / chan / np.sqrt(2.))
-    else:
-        linewidth = None
+
+    #=================================================================
+    # Original One
+    #if linewidth > 0.0:
+    #    linewidth = abs(linewidth / chan / np.sqrt(2.))
+    #else:
+    #    linewidth = None
+    #=================================================================
+    # Revised One (Jordan Wu)
+    if linewidth is not None:
+        if linewidth > 0.0:
+            linewidth = abs(linewidth / chan / np.sqrt(2.))
+        else:
+            linewith = None
+    #=================================================================
+
     _, _, Fnu, dFnu = quadratic(data, x0=velax[0], dx=chan,
                                 uncertainty=np.ones(data.shape)*rms,
                                 linewidth=linewidth, axis=axis)
